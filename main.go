@@ -7,6 +7,10 @@ import (
 	"github.com/pinshare/core/handlers"
 	"google.golang.org/grpc"
 	"net"
+
+	"os"
+	"os/signal"
+	"syscall"
 )
 
 // type addPinServer struct{}
@@ -81,7 +85,13 @@ func main() {
 		fmt.Printf("Add service: %s\n", service.Name())
 		service.Register(server, c)
 	}
-	server.Serve(socket)
+	go server.Serve(socket)
+
+	ch := make(chan os.Signal)
+	signal.Notify(ch, syscall.SIGINT, syscall.SIGTERM)
+	<-ch
+
+	server.GracefulStop()
 
 	// entity.RegisterAddPinServer(server, &addPinServer{})
 	// entity.RegisterUpdatePinServer(server, &updatePinServer{})
