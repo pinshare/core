@@ -1,0 +1,76 @@
+hash: cc255d6b0e8635a0d60428cc543829295dade230a70cb188170a763d77698e58
+updated: 2017-05-12T20:19:33.499656692+09:00
+imports:
+- name: github.com/BurntSushi/toml
+  version: 99064174e013895bbd9b025c31100bd1d9b590ca
+- name: github.com/golang/protobuf
+  version: b50ceb1fa9818fa4d78b016c2d4ae025593a7ce3
+  subpackages:
+  - proto
+  - ptypes/any
+- name: github.com/pinshare/config
+  version: 51f618ef8b0b8ae6c0efd4007f1418e4f13022e2
+- name: github.com/pinshare/spec
+  version: 4198df95903c3b2d51b5193ac10e81d724730faa
+  subpackages:
+  - service
+- name: github.com/pinshare/syncker
+  version: 4feed02947a3d4f3167dd02a1b0913444aacc376
+- name: github.com/ziutek/mymysql
+  version: 1d19cbf98d83564cc561192ae7d7183d795f7ac7
+  subpackages:
+  - mysql
+  - native
+- name: go.uber.org/atomic
+  version: 4e336646b2ef9fc6e47be8e21594178f98e5ebcf
+- name: go.uber.org/zap
+  version: f2fca9a30853031b445cb52ff2fc37d6382c3c96
+  subpackages:
+  - buffer
+  - internal/bufferpool
+  - internal/color
+  - internal/exit
+  - internal/multierror
+  - zapcore
+- name: golang.org/x/net
+  version: 0b588ed7a0cd59c271d128ec8c429c1c1607e8ab
+  subpackages:
+  - context
+  - context/ctxhttp
+  - http2
+  - http2/hpack
+  - idna
+  - internal/timeseries
+  - lex/httplex
+  - trace
+- name: golang.org/x/text
+  version: 470f45bf29f4147d6fbd7dfd0a02a848e49f5bf4
+  subpackages:
+  - secure/bidirule
+  - transform
+  - unicode/bidi
+  - unicode/norm
+- name: google.golang.org/genproto
+  version: 411e09b969b1170a9f0c467558eb4c4c110d9c77
+  subpackages:
+  - googleapis/rpc/status
+- name: google.golang.org/grpc
+  version: 72b617aacebed7836e806925e6f61eef55cb40c8
+  subpackages:
+  - codes
+  - credentials
+  - grpclog
+  - internal
+  - keepalive
+  - metadata
+  - naming
+  - peer
+  - stats
+  - status
+  - tap
+  - transport
+- name: gopkg.in/olivere/elastic.v5
+  version: 00cf81dff7fdb9e31f70e99bd909339789e71a8e
+  subpackages:
+  - uritemplates
+testImports: []

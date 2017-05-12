@@ -1,0 +1,10 @@
+package: github.com/pinshare/core
+import:
+  - package: github.com/pinshare/spec/service
+  - package: golang.org/x/net/context
+  - package: google.golang.org/grpc
+  - package: gopkg.in/olivere/elastic.v5
+  - package: github.com/ziutek/mymysql/mysql
+  - package: github.com/ziutek/mymysql/native
+  - package: go.uber.org/zap
+  - package: github.com/BurntSushi/toml
