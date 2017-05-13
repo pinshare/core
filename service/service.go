@@ -1,4 +1,4 @@
-package handlers
+package service
 
 import (
 	"github.com/pinshare/config"
@@ -10,12 +10,12 @@ type serviceInterface interface {
 	Register(*grpc.Server, *config.Config) error
 }
 
-var _handlers = []serviceInterface{}
+var _services = []serviceInterface{}
 
 func addService(service serviceInterface) {
-	_handlers = append(_handlers, service)
+	__services = append(_services, service)
 }
 
-func GetHandlers() []serviceInterface {
-	return _handlers
+func GetServices() []serviceInterface {
+	return _services
 }

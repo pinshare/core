@@ -1,6 +1,7 @@
-package handlers
+package service
 
 import (
+	"strings"
 	"time"
 
 	"github.com/pinshare/config"
@@ -12,37 +13,37 @@ import (
 	"google.golang.org/grpc"
 )
 
-type addPinServer struct {
+type addPinService struct {
 	conf   *config.Config
 	logger *zap.SugaredLogger
 	serviceInterface
 }
 
-func NewAddPinServer() *addPinServer {
+func NewAddPinService() *addPinService {
 	logger, err := zap.NewProduction()
 	if err != nil {
 		panic(err)
 	}
-	return &addPinServer{
+	return &addPinService{
 		logger: logger.Sugar(),
 	}
 }
 
 func init() {
-	addService(NewAddPinServer())
+	addService(NewAddPinService())
 }
 
-func (s *addPinServer) Name() string {
-	return "AddPinServer"
+func (s *addPinService) Name() string {
+	return "AddPinService"
 }
 
-func (s *addPinServer) Register(server *grpc.Server, config *config.Config) error {
+func (s *addPinService) Register(server *grpc.Service, config *config.Config) error {
 	s.conf = config
-	service.RegisterAddPinServer(server, s)
+	service.RegisterAddPinService(server, s)
 	return nil
 }
 
-func (s *addPinServer) Execute(ctx context.Context, request *service.AddRequest) (*service.PinResponse, error) {
+func (s *addPinService) Execute(ctx context.Context, request *service.AddRequest) (*service.PinResponse, error) {
 	db, err := s.conf.MySQL.Connect()
 	if err != nil {
 		return nil, err
@@ -54,12 +55,8 @@ func (s *addPinServer) Execute(ctx context.Context, request *service.AddRequest)
 		s.logger.Error(err)
 		return nil, err
 	}
-	if err != nil {
-		s.logger.Error(err)
-		return nil, err
-	}
 
-	createPin, _ := db.Prepare("INSERT INTO pins VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?)")
+	createPin, err := db.Prepare("INSERT INTO pins VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?)")
 	if err != nil {
 		s.logger.Error(err)
 		return nil, err
@@ -84,6 +81,7 @@ func (s *addPinServer) Execute(ctx context.Context, request *service.AddRequest)
 	createTag, err := db.Prepare("INSERT INTO tags VALUES (NULL, ?, ?, ?)")
 	if err != nil {
 		s.logger.Error(err)
+		tr.Rollback()
 		return nil, err
 	}
 	ti := tr.Do(createTag)
@@ -108,6 +106,7 @@ func (s *addPinServer) Execute(ctx context.Context, request *service.AddRequest)
 	relPinTags, err := db.Prepare("INSERT INTO rel_pin_tags VALUES (?, ?, ?, ?)")
 	if err != nil {
 		s.logger.Error(err)
+		tr.Rollback()
 		return nil, err
 	}
 
@@ -144,7 +143,7 @@ func (s *addPinServer) Execute(ctx context.Context, request *service.AddRequest)
 	return resp, nil
 }
 
-func (s *addPinServer) findByTagName(db mysql.Conn, tagName string) (tagId int, exists bool) {
+func (s *addPinService) findByTagName(db mysql.Conn, tagName string) (tagId int, exists bool) {
 	stmt, _ := db.Prepare("SELECT id FROM tags WHERE name = ? LIMIT 1")
 	row, _, err := stmt.ExecFirst(tagName)
 	if err != nil {

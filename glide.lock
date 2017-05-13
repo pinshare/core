@@ -1,17 +1,17 @@
 hash: cc255d6b0e8635a0d60428cc543829295dade230a70cb188170a763d77698e58
-updated: 2017-05-12T20:19:33.499656692+09:00
+updated: 2017-05-13T18:24:09.684799199+09:00
 imports:
 - name: github.com/BurntSushi/toml
   version: 99064174e013895bbd9b025c31100bd1d9b590ca
 - name: github.com/golang/protobuf
-  version: b50ceb1fa9818fa4d78b016c2d4ae025593a7ce3
+  version: fec3b39b059c0f88fa6b20f5ed012b1aa203a8b4
   subpackages:
   - proto
   - ptypes/any
 - name: github.com/pinshare/config
   version: 51f618ef8b0b8ae6c0efd4007f1418e4f13022e2
 - name: github.com/pinshare/spec
-  version: 4198df95903c3b2d51b5193ac10e81d724730faa
+  version: 6cd34bfbcba394c1ec3629174db8be92c7cce78c
   subpackages:
   - service
 - name: github.com/pinshare/syncker
@@ -44,7 +44,7 @@ imports:
   - lex/httplex
   - trace
 - name: golang.org/x/text
-  version: 470f45bf29f4147d6fbd7dfd0a02a848e49f5bf4
+  version: 19e51611da83d6be54ddafce4a4af510cb3e9ea4
   subpackages:
   - secure/bidirule
   - transform

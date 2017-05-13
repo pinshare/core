@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/pinshare/config"
-	"github.com/pinshare/core/handlers"
+	"github.com/pinshare/core/service"
 	"google.golang.org/grpc"
 	"net"
 
@@ -59,9 +59,9 @@ type cliOptions struct {
 var cli = cliOptions{}
 
 func init() {
-	flag.IntVar(&cli.Port, "p", 5000, "Listen Port Number")
+	flag.IntVar(&cli.Port, "p", 5001, "Listen Port Number")
 	flag.StringVar(&cli.Host, "h", "0.0.0.0", "Listen Host IP")
-	flag.StringVar(&cli.ConfigPath, "c", "/etc/likeapinboard.conf", "Config path")
+	flag.StringVar(&cli.ConfigPath, "c", "/etc/pinshare.conf", "Config path")
 	flag.Parse()
 }
 
@@ -81,9 +81,9 @@ func main() {
 	fmt.Println("Listen:", listen, "...")
 
 	server := grpc.NewServer()
-	for _, service := range handlers.GetHandlers() {
-		fmt.Printf("Add service: %s\n", service.Name())
-		service.Register(server, c)
+	for _, s := range service.GetServices() {
+		fmt.Printf("Add service: %s\n", s.Name())
+		s.Register(server, c)
 	}
 	go server.Serve(socket)
 
